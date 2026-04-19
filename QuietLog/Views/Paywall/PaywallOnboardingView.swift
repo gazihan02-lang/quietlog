@@ -100,11 +100,11 @@ struct PaywallOnboardingView: View {
 
                     // MARK: Footer Links
                     HStack(spacing: Spacing.md) {
-                        if let termsURL = URL(string: "https://bestsoft.com.tr/quietlog/terms") {
+                        if let termsURL = URL(string: "https://gazihan02-lang.github.io/quietlog/terms/") {
                             Link("paywall.terms", destination: termsURL)
                         }
                         Text("·")
-                        if let privacyURL = URL(string: "https://bestsoft.com.tr/quietlog/privacy") {
+                        if let privacyURL = URL(string: "https://gazihan02-lang.github.io/quietlog/privacy/") {
                             Link("paywall.privacy", destination: privacyURL)
                         }
                     }

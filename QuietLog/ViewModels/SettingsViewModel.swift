@@ -103,11 +103,11 @@ final class SettingsViewModel {
 
     // MARK: - URL Openers
     func openPrivacyPolicy() {
-        open(urlString: "https://bestsoft.com.tr/quietlog/privacy")
+        open(urlString: "https://gazihan02-lang.github.io/quietlog/privacy/")
     }
 
     func openTerms() {
-        open(urlString: "https://bestsoft.com.tr/quietlog/terms")
+        open(urlString: "https://gazihan02-lang.github.io/quietlog/terms/")
     }
 
     func openSupport() {
