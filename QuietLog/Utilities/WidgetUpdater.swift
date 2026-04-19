@@ -11,6 +11,7 @@ import WidgetKit
 enum WidgetUpdater {
 
     private static let suiteName = "group.com.gazihan.quietlog"
+    private static let keyIsActive = "widget.isActive"
 
     // MARK: - Write latest sample values (called every second while session is active)
     // Does NOT trigger a WidgetKit reload — reloads are batched at zone-change / session events.
@@ -19,6 +20,8 @@ enum WidgetUpdater {
         defaults.set(db,   forKey: "widget.latestDB")
         defaults.set(peak, forKey: "widget.peakDB")
         defaults.set(avg,  forKey: "widget.avgDB")
+        // db == 0 is written on stopSession — isActive is the authoritative idle flag
+        defaults.set(db > 0, forKey: keyIsActive)
     }
 
     // MARK: - Write Pro status (called from SubscriptionService.isPro didSet)

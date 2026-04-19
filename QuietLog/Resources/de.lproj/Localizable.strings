@@ -184,6 +184,7 @@
 "widget.medium.desc"                = "Aktueller dB, Spitzen- und Durchschnittswert.";
 "widget.now"                        = "JETZT";
 "widget.updated"                    = "Gerade aktualisiert";
+"widget.idle"                        = "App öffnen, um Messung zu starten";
 "common.ok"     = "OK";
 "common.cancel" = "Abbrechen";
 "common.done"   = "Fertig";

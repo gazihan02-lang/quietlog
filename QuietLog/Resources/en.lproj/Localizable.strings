@@ -228,6 +228,7 @@
 "widget.medium.desc"                = "Current dB, peak, and average.";
 "widget.now"                        = "NOW";
 "widget.updated"                    = "Updated just now";
+"widget.idle"                        = "Open app to start measuring";
 
 // MARK: - Common
 "common.ok"     = "OK";

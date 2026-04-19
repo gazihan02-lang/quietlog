@@ -74,6 +74,14 @@ struct SmallDBWidgetView: View {
     let entry: DBWidgetEntry
 
     var body: some View {
+        if entry.isSessionActive {
+            activeView
+        } else {
+            idleView
+        }
+    }
+
+    private var activeView: some View {
         VStack(spacing: 4) {
             Spacer()
 
@@ -113,6 +121,20 @@ struct SmallDBWidgetView: View {
         .padding(12)
         .widgetURL(URL(string: "quietlog://open"))
     }
+
+    private var idleView: some View {
+        VStack(spacing: 6) {
+            Image(systemName: "waveform.slash")
+                .font(.title2)
+                .foregroundStyle(.secondary)
+            Text("widget.idle")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding(12)
+        .widgetURL(URL(string: "quietlog://open"))
+    }
 }
 
 // MARK: - Medium Home Screen Widget
@@ -134,6 +156,14 @@ struct MediumDBWidgetView: View {
     let entry: DBWidgetEntry
 
     var body: some View {
+        if entry.isSessionActive {
+            activeView
+        } else {
+            idleView
+        }
+    }
+
+    private var activeView: some View {
         HStack(spacing: 16) {
             // Left: current dB
             VStack(alignment: .leading, spacing: 4) {
@@ -170,6 +200,24 @@ struct MediumDBWidgetView: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
+        }
+        .padding(16)
+        .widgetURL(URL(string: "quietlog://open"))
+    }
+
+    private var idleView: some View {
+        HStack(spacing: 16) {
+            Image(systemName: "waveform.slash")
+                .font(.largeTitle)
+                .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("QuietLog")
+                    .font(.headline.bold())
+                Text("widget.idle")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
         }
         .padding(16)
         .widgetURL(URL(string: "quietlog://open"))

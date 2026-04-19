@@ -13,6 +13,7 @@ struct DBWidgetEntry: TimelineEntry {
     let peakDB: Double
     let averageDB: Double
     let isPro: Bool
+    let isSessionActive: Bool
 }
 
 // MARK: - Shared Widget Provider
@@ -25,7 +26,8 @@ struct DBWidgetProvider: TimelineProvider {
             zone: .safe,
             peakDB: 72,
             averageDB: 62,
-            isPro: true
+            isPro: true,
+            isSessionActive: true
         )
     }
 
@@ -44,19 +46,21 @@ struct DBWidgetProvider: TimelineProvider {
     // MARK: - Read latest sample from shared App Group UserDefaults
     private func latestEntry() -> DBWidgetEntry {
         // Widgets cannot run AVAudioEngine; they read last-saved value written by main app via WidgetUpdater
-        let defaults = UserDefaults(suiteName: WidgetDataWriter.suiteName) ?? .standard
-        let db       = defaults.double(forKey: WidgetDataWriter.keyDB)
-        let peak     = defaults.double(forKey: WidgetDataWriter.keyPeak)
-        let avg      = defaults.double(forKey: WidgetDataWriter.keyAvg)
-        let isPro    = defaults.bool(forKey: WidgetDataWriter.keyIsPro)
+        let defaults     = UserDefaults(suiteName: WidgetDataWriter.suiteName) ?? .standard
+        let db           = defaults.double(forKey: WidgetDataWriter.keyDB)
+        let peak         = defaults.double(forKey: WidgetDataWriter.keyPeak)
+        let avg          = defaults.double(forKey: WidgetDataWriter.keyAvg)
+        let isPro        = defaults.bool(forKey: WidgetDataWriter.keyIsPro)
+        let isActive     = defaults.bool(forKey: WidgetDataWriter.keyIsActive)
 
         return DBWidgetEntry(
             date: Date(),
-            currentDB: db > 0 ? db : 0,
+            currentDB: db,
             zone: DBZone.classify(db: db),
             peakDB: peak,
             averageDB: avg,
-            isPro: isPro
+            isPro: isPro,
+            isSessionActive: isActive
         )
     }
 }
@@ -64,11 +68,12 @@ struct DBWidgetProvider: TimelineProvider {
 // MARK: - Widget Data Writer (legacy stub — actual writing is done by WidgetUpdater in main app)
 // This enum is kept as a namespace for the shared UserDefaults key constants.
 enum WidgetDataWriter {
-    static let suiteName = "group.com.gazihan.quietlog"
+    static let suiteName  = "group.com.gazihan.quietlog"
 
     // Keys mirrored in WidgetUpdater (main app) and DBWidgetProvider (widget extension)
-    static let keyDB    = "widget.latestDB"
-    static let keyPeak  = "widget.peakDB"
-    static let keyAvg   = "widget.avgDB"
-    static let keyIsPro = "widget.isPro"
+    static let keyDB       = "widget.latestDB"
+    static let keyPeak     = "widget.peakDB"
+    static let keyAvg      = "widget.avgDB"
+    static let keyIsPro    = "widget.isPro"
+    static let keyIsActive = "widget.isActive"
 }

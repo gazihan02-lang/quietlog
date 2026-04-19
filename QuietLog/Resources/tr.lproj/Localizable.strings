@@ -207,8 +207,7 @@
 "widget.medium.name"                = "QuietLog Detay";
 "widget.medium.desc"                = "Anlık dB, tepe ve ortalama.";
 "widget.now"                        = "ŞİMDİ";
-"widget.updated"                    = "Az önce güncellendi";
-
+"widget.updated"                    = "Az önce güncellendi";"widget.idle"                        = "Ölçüm başlatmak için uygulamayı aç";
 "common.ok"     = "Tamam";
 "common.cancel" = "İptal";
 "common.done"   = "Bitti";
