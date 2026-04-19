@@ -52,12 +52,15 @@ struct QuietLogApp: App {
         .onChange(of: scenePhase) { _, newPhase in
             switch newPhase {
             case .background:
-                // Flush pending HealthKit samples before going to background,
-                // then stop the timer to avoid it firing while suspended.
+                // Stop 5 Hz UI timer — UI is not visible, no point firing it.
+                AudioMeterService.shared.pauseUITimer()
+                // Flush pending HealthKit samples, then stop its timer.
                 Task { await HealthKitService.shared.flushBatch() }
                 HealthKitService.shared.stopBatchTimer()
             case .active:
-                // Restart the timer when the app returns to foreground.
+                // Restart UI timer if a session is still running.
+                AudioMeterService.shared.resumeUITimer()
+                // Restart HealthKit batch timer.
                 HealthKitService.shared.startBatchTimerIfNeeded()
             default:
                 break

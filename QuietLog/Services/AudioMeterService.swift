@@ -184,18 +184,15 @@ final class AudioMeterService {
         let frameCount = Int(buffer.frameLength)
         guard frameCount > 0 else { return }
 
-        // Snapshot calibration offset from lock (written on MainActor)
-        let calibOffset = tapState.withLock { $0.calibrationOffset }
-
-        // All DSP is local — no MainActor state touched here
-        let dba = DBCalculator.processBuffer(
-            samples: channelData[0],
-            count: frameCount,
-            calibrationOffset: calibOffset
-        )
-
-        // Accumulate; returns a 1-second average only once per second
+        // Single lock acquisition: read config, run DSP (~5 µs pure float math), update state.
+        // Merging the former two withLock calls eliminates any window where another writer
+        // could slip in between reading calibrationOffset and writing latestDB.
         let result: (avg: Double, source: SampleSource)? = tapState.withLock { state in
+            let dba = DBCalculator.processBuffer(
+                samples: channelData[0],
+                count: frameCount,
+                calibrationOffset: state.calibrationOffset
+            )
             state.latestDB = dba
             let source: SampleSource = state.isHeadphone ? .headphone : .environmental
             state.latestSource = source
@@ -215,6 +212,23 @@ final class AudioMeterService {
             }
         }
         // UI refresh is handled by the 5 Hz uiTimer — no per-buffer Task needed
+    }
+
+    // MARK: - UI Timer Lifecycle
+    /// Pause the 5 Hz UI timer when the app is backgrounded (UI is not visible).
+    func pauseUITimer() {
+        uiTimer?.invalidate()
+        uiTimer = nil
+    }
+
+    /// Resume the 5 Hz UI timer when the app returns to foreground (only if a session is active).
+    func resumeUITimer() {
+        guard isRunning, uiTimer == nil else { return }
+        uiTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { [weak self] _ in
+            guard let self else { return }
+            let db = self.tapState.withLock { $0.latestDB }
+            self.publishDB(db)
+        }
     }
 
     @MainActor
