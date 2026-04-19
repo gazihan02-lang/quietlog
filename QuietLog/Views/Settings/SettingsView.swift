@@ -8,7 +8,7 @@ struct SettingsView: View {
 
     @State private var viewModel = SettingsViewModel()
     @Environment(SubscriptionService.self) private var subscription
-    @ObservedObject private var prefs = UserPreferences.shared
+    @Bindable private var prefs = UserPreferences.shared
     @State private var showPaywall = false
 
     var body: some View {
