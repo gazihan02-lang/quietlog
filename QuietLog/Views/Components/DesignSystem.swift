@@ -166,5 +166,7 @@ struct ZoneBadge: View {
         .padding(.vertical, Spacing.sm)
         .background(zone.fallbackColor.gradient)
         .clipShape(Capsule())
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(zone.label) zone")
     }
 }

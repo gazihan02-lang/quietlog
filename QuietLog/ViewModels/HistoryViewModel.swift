@@ -63,6 +63,19 @@ final class HistoryViewModel {
         dataService.exportCSV(scope: scope)
     }
 
+    /// Writes CSV to a temp file and returns the URL for ShareLink/UIActivityViewController.
+    func exportFileURL() -> URL? {
+        let csv = exportCSV()
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("quietlog_\(scope.rawValue.lowercased()).csv")
+        do {
+            try csv.write(to: url, atomically: true, encoding: .utf8)
+            return url
+        } catch {
+            return nil
+        }
+    }
+
     // MARK: - Formatted Stats
     var formattedAverage: String   { DBCalculator.formatWithUnit(scopeAverage) }
     var formattedPeak: String      { DBCalculator.formatWithUnit(scopePeak) }

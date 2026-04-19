@@ -189,3 +189,23 @@
 "common.cancel" = "Annuler";
 "common.done"   = "OK";
 "common.notice" = "Avis";
+
+// MARK: - Accessibility
+"accessibility.db.readout %@"       = "%@ décibels";
+"accessibility.ring.hint"           = "Anneau de sonomètre affichant les niveaux actuel, maximum et moyen";
+"accessibility.session.start"       = "Démarrer la session";
+"accessibility.session.stop"        = "Arrêter la session";
+
+// MARK: - Share / Export
+"meter.share.subject"               = "QuietLog — Instantané sonore";
+"meter.share.snapshot"              = "QuietLog : %d dB (Pic : %d, Moy : %d) — zone %@";
+"history.export.csv.message"        = "Historique audio exporté depuis QuietLog";
+"report.pdf.title"                  = "QuietLog — Rapport auditif hebdomadaire";
+
+// MARK: - PDF Content
+"report.pdf.score"                  = "Score auditif : %d/100";
+"report.pdf.average"                = "Moyenne : %.1f dB";
+"report.pdf.peak"                   = "Pic : %.1f dB";
+"report.pdf.above85"                = "Durée au-dessus de 85 dB : %d min";
+"report.pdf.summary_header"         = "Résumé :";
+"report.pdf.recommendations_header" = "Recommandations :";

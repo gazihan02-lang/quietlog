@@ -51,15 +51,11 @@ struct WeeklyReportView: View {
                     Button("common.done") { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        if let pdfData = ReportService.shared.generatePDFData(report: report) {
-                            // Share PDF
-                            let url = FileManager.default.temporaryDirectory.appendingPathComponent("hearing_report.pdf")
-                            try? pdfData.write(to: url)
-                            // ShareLink needs a UIActivityViewController — handled via sheet
+                    if let pdfData = ReportService.shared.generatePDFData(report: report),
+                       let url = writePDFToTemp(pdfData) {
+                        ShareLink(item: url, subject: Text("report.pdf.title")) {
+                            Label("report.share", systemImage: "square.and.arrow.up")
                         }
-                    } label: {
-                        Label("report.share", systemImage: "square.and.arrow.up")
                     }
                 }
             }
@@ -184,6 +180,17 @@ struct WeeklyReportView: View {
         case 70..<90:  return .blue
         case 50..<70:  return .orange
         default:       return .red
+        }
+    }
+
+    private func writePDFToTemp(_ data: Data) -> URL? {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("quietlog_report.pdf")
+        do {
+            try data.write(to: url, options: .atomic)
+            return url
+        } catch {
+            return nil
         }
     }
 }

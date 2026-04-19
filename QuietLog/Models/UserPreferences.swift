@@ -5,9 +5,13 @@ import Foundation
 import SwiftUI
 
 // MARK: - User Preferences (stored via @AppStorage / UserDefaults)
-final class UserPreferences: ObservableObject {
+@Observable
+final class UserPreferences {
 
     static let shared = UserPreferences()
+
+    // MARK: - ISO8601 formatter (static — avoids repeated allocations)
+    private static let iso8601: ISO8601DateFormatter = ISO8601DateFormatter()
 
     // Subscription
     @AppStorage("onboardingCompleted")      var onboardingCompleted: Bool   = false
@@ -36,10 +40,10 @@ final class UserPreferences: ObservableObject {
     var firstLaunchDate: Date? {
         get {
             guard !firstLaunchDateString.isEmpty else { return nil }
-            return ISO8601DateFormatter().date(from: firstLaunchDateString)
+            return UserPreferences.iso8601.date(from: firstLaunchDateString)
         }
         set {
-            firstLaunchDateString = newValue.map { ISO8601DateFormatter().string(from: $0) } ?? ""
+            firstLaunchDateString = newValue.map { UserPreferences.iso8601.string(from: $0) } ?? ""
         }
     }
 

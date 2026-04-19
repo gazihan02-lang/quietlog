@@ -45,6 +45,9 @@ struct LiveMeterView: View {
                         )
                         .frame(width: 240, height: 240)
                         .padding(.vertical, Spacing.lg)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel("\(Int(viewModel.currentDB)) decibels, \(viewModel.currentZone.label) zone")
+                        .accessibilityHint(String(localized: "accessibility.ring.hint"))
 
                         Spacer()
 
@@ -91,13 +94,18 @@ struct LiveMeterView: View {
             Spacer()
 
             HStack(spacing: Spacing.md) {
-                // Share snapshot
-                Button {
-                    HapticsService.shared.playLightTap()
-                    // ShareLink will be in a sheet
-                } label: {
+                // Share snapshot — only enabled during / after a session
+                if viewModel.isSessionActive || viewModel.sessionPeak > 0 {
+                    ShareLink(
+                        item: viewModel.sessionShareText,
+                        subject: Text("meter.share.subject")
+                    ) {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundStyle(.white)
+                    }
+                } else {
                     Image(systemName: "square.and.arrow.up")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.white.opacity(0.3))
                 }
             }
         }
@@ -121,6 +129,9 @@ struct LiveMeterView: View {
                     .font(.dbUnit)
                     .foregroundStyle(.white.opacity(0.8))
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(String(localized: "accessibility.db.readout \(Int(viewModel.currentDB))"))
+            .accessibilityValue("\(Int(viewModel.currentDB)) dB")
 
             // Zone badge
             ZoneBadge(zone: viewModel.currentZone)

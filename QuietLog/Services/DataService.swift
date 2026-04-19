@@ -60,7 +60,32 @@ final class DataService {
 
     var modelContext: ModelContext?
 
+    // MARK: - Static Formatters (allocated once, thread-safe for read)
+    private static let mdFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "M/d"
+        return f
+    }()
+
+    private static let mmmFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "MMM"
+        return f
+    }()
+
     // MARK: - Aggregations
+
+    /// Single fetch + in-memory compute — avoids N+1 queries.
+    func computeStats(for scope: HistoryScope) -> (avg: Double, peak: Double, overThreshold: TimeInterval) {
+        let s = samples(in: scope)
+        guard !s.isEmpty else { return (0, 0, 0) }
+        let dbs = s.map(\.db)
+        let avg = dbs.reduce(0, +) / Double(dbs.count)
+        let peak = dbs.max() ?? 0
+        let threshold = UserPreferences.shared.customDangerThreshold
+        let over = TimeInterval(s.filter { $0.db > threshold }.count)
+        return (avg, peak, over)
+    }
 
     func samples(in scope: HistoryScope) -> [DecibelSample] {
         guard let ctx = modelContext else { return [] }
@@ -72,19 +97,10 @@ final class DataService {
         return (try? ctx.fetch(descriptor)) ?? []
     }
 
-    func averageDB(in scope: HistoryScope) -> Double {
-        let s = samples(in: scope)
-        guard !s.isEmpty else { return 0 }
-        return s.map(\.db).reduce(0, +) / Double(s.count)
-    }
-
-    func peakDB(in scope: HistoryScope) -> Double {
-        samples(in: scope).map(\.db).max() ?? 0
-    }
-
+    func averageDB(in scope: HistoryScope) -> Double       { computeStats(for: scope).avg }
+    func peakDB(in scope: HistoryScope) -> Double          { computeStats(for: scope).peak }
     func durationOverThreshold(_ threshold: Double, in scope: HistoryScope) -> TimeInterval {
-        let s = samples(in: scope).filter { $0.db > threshold }
-        return TimeInterval(s.count) // 1 sample ≈ 1 second
+        computeStats(for: scope).overThreshold
     }
 
     // MARK: - Chart Data
@@ -132,9 +148,7 @@ final class DataService {
             guard let date = calendar.date(byAdding: .day, value: -(days - 1 - offset), to: today) else { return nil }
             let vals = buckets[date] ?? []
             let avg = vals.isEmpty ? 0 : vals.reduce(0, +) / Double(vals.count)
-            let fmt = DateFormatter()
-            fmt.dateFormat = "M/d"
-            return ChartPoint(date: date, value: avg, label: fmt.string(from: date))
+            return ChartPoint(date: date, value: avg, label: DataService.mdFormatter.string(from: date))
         }
     }
 
@@ -149,9 +163,7 @@ final class DataService {
         return buckets.keys.sorted().compactMap { date -> ChartPoint? in
             guard let vals = buckets[date], !vals.isEmpty else { return nil }
             let avg = vals.reduce(0, +) / Double(vals.count)
-            let fmt = DateFormatter()
-            fmt.dateFormat = "MMM"
-            return ChartPoint(date: date, value: avg, label: fmt.string(from: date))
+            return ChartPoint(date: date, value: avg, label: DataService.mmmFormatter.string(from: date))
         }
     }
 
@@ -169,7 +181,7 @@ final class DataService {
                 timestamp: s.startDate,
                 peakDB: s.peakDB,
                 durationSeconds: s.durationSeconds,
-                locationName: s.locationName
+                locationName: nil
             )
         }
     }
@@ -183,8 +195,9 @@ final class DataService {
         )
         let s = (try? ctx.fetch(descriptor)) ?? []
 
-        let minutesAbove85 = s.filter { $0.db > 85 }.count / 60
-        let peakEvents     = s.filter { $0.db > 100 }.count / 30   // group by ~30 sec spike
+        // C7 fix: use Double division before converting to Int
+        let minutesAbove85 = Int(Double(s.filter { $0.db > 85 }.count) / 60.0)
+        let peakEvents     = Int(Double(s.filter { $0.db > 100 }.count) / 30.0)
 
         let score = 100 - (minutesAbove85 * 5) - (peakEvents * 3)
         return max(0, min(100, score))
@@ -199,13 +212,14 @@ final class DataService {
         try ctx.save()
     }
 
+    private static let exportISO8601: ISO8601DateFormatter = ISO8601DateFormatter()
+
     /// Export samples as CSV string
     func exportCSV(scope: HistoryScope) -> String {
         let s = samples(in: scope)
         var csv = "timestamp,db,source\n"
-        let fmt = ISO8601DateFormatter()
         for sample in s {
-            csv += "\(fmt.string(from: sample.timestamp)),\(sample.db),\(sample.source)\n"
+            csv += "\(DataService.exportISO8601.string(from: sample.timestamp)),\(sample.db),\(sample.source)\n"
         }
         return csv
     }

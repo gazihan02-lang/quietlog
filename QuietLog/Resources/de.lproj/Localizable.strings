@@ -189,3 +189,23 @@
 "common.cancel" = "Abbrechen";
 "common.done"   = "Fertig";
 "common.notice" = "Hinweis";
+
+// MARK: - Accessibility
+"accessibility.db.readout %@"       = "%@ Dezibel";
+"accessibility.ring.hint"           = "Lautstärkemesser-Ring zeigt aktuellen, Spitzen- und Durchschnittspegel";
+"accessibility.session.start"       = "Sitzung starten";
+"accessibility.session.stop"        = "Sitzung beenden";
+
+// MARK: - Share / Export
+"meter.share.subject"               = "QuietLog — Geräuschaufnahme";
+"meter.share.snapshot"              = "QuietLog: %d dB (Spitze: %d, Ø: %d) — Zone %@";
+"history.export.csv.message"        = "Exportierte Geräuschhistorie aus QuietLog";
+"report.pdf.title"                  = "QuietLog — Wöchentlicher Hörbericht";
+
+// MARK: - PDF Content
+"report.pdf.score"                  = "Hörscore: %d/100";
+"report.pdf.average"                = "Durchschnitt: %.1f dB";
+"report.pdf.peak"                   = "Spitzenwert: %.1f dB";
+"report.pdf.above85"                = "Zeit über 85 dB: %d Min.";
+"report.pdf.summary_header"         = "Zusammenfassung:";
+"report.pdf.recommendations_header" = "Empfehlungen:";

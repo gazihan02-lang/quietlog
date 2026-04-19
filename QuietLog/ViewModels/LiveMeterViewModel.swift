@@ -203,4 +203,15 @@ final class LiveMeterViewModel {
     var formattedDB: String {
         DBCalculator.format(currentDB)
     }
+
+    /// Plain-text share snapshot for ShareLink
+    var sessionShareText: String {
+        String(
+            format: String(localized: "meter.share.snapshot"),
+            Int(currentDB),
+            Int(sessionPeak),
+            Int(sessionAverage),
+            currentZone.label
+        )
+    }
 }

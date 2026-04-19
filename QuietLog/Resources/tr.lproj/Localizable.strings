@@ -214,3 +214,23 @@
 "common.cancel" = "İptal";
 "common.done"   = "Bitti";
 "common.notice" = "Bildirim";
+
+// MARK: - Accessibility
+"accessibility.db.readout %@"       = "%@ desibel";
+"accessibility.ring.hint"           = "Mevcut, zirve ve ortalama sesi gösteren gürültü ölçer";
+"accessibility.session.start"       = "Oturumu başlat";
+"accessibility.session.stop"        = "Oturumu durdur";
+
+// MARK: - Share / Export
+"meter.share.subject"               = "QuietLog — Gürültü Ölçümü";
+"meter.share.snapshot"              = "QuietLog: %d dB (Zirve: %d, Ort: %d) — %@ bölgesi";
+"history.export.csv.message"        = "QuietLog gürültü geçmişi döndürüldü";
+"report.pdf.title"                  = "QuietLog — Haftalık İşitme Raporu";
+
+// MARK: - PDF Content
+"report.pdf.score"                  = "Duyma Skoru: %d/100";
+"report.pdf.average"                = "Ortalama: %.1f dB";
+"report.pdf.peak"                   = "Zirve: %.1f dB";
+"report.pdf.above85"                = "85 dB üzerinde süre: %d dk";
+"report.pdf.summary_header"         = "Özet:";
+"report.pdf.recommendations_header" = "Öneriler:";

@@ -35,16 +35,13 @@ struct HistoryView: View {
             .navigationTitle("history.title")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    if subscription.isPro {
-                        Menu {
-                            Button {
-                                let csv = viewModel.exportCSV()
-                                // Handle share
-                            } label: {
-                                Label("history.export.csv", systemImage: "square.and.arrow.up")
-                            }
-                        } label: {
-                            Image(systemName: "ellipsis.circle")
+                    if subscription.isPro, let url = viewModel.exportFileURL() {
+                        ShareLink(
+                            item: url,
+                            subject: Text("history.export.csv"),
+                            message: Text("history.export.csv.message")
+                        ) {
+                            Image(systemName: "square.and.arrow.up")
                         }
                     }
                 }

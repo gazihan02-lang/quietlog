@@ -53,11 +53,11 @@ final class ReportService {
 
         let avgDB        = samples.map(\.db).reduce(0, +) / Double(samples.count)
         let peakDB       = samples.map(\.db).max() ?? 0
-        let above85      = samples.filter { $0.db > 85 }.count / 60
-        let above100     = samples.filter { $0.db > 100 }.count / 60
+        // C7: use Double division to avoid integer truncation
+        let above85      = Int(Double(samples.filter { $0.db > 85 }.count) / 60.0)
+        let above100     = Int(Double(samples.filter { $0.db > 100 }.count) / 60.0)
         let sessionMins  = samples.count / 60
-
-        let score        = computeScore(minutesAbove85: above85, peakEvents: samples.filter { $0.db > 100 }.count / 30)
+        let score        = computeScore(minutesAbove85: above85, peakEvents: Int(Double(samples.filter { $0.db > 100 }.count) / 30.0))
 
         let report = WeeklyReport(
             score: score,
@@ -127,7 +127,8 @@ final class ReportService {
         let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 595, height: 842))
         return renderer.pdfData { ctx in
             ctx.beginPage()
-            let title = "QuietLog — Weekly Hearing Report" as NSString
+
+            let title = String(localized: "report.pdf.title") as NSString
             let titleAttrs: [NSAttributedString.Key: Any] = [
                 .font: UIFont.boldSystemFont(ofSize: 24),
                 .foregroundColor: UIColor.label
@@ -141,7 +142,7 @@ final class ReportService {
             ])
 
             // Score
-            let scoreStr = "Hearing Score: \(report.score)/100" as NSString
+            let scoreStr = String(format: String(localized: "report.pdf.score"), report.score) as NSString
             scoreStr.draw(at: CGPoint(x: 40, y: 120), withAttributes: [
                 .font: UIFont.boldSystemFont(ofSize: 18),
                 .foregroundColor: UIColor.label
@@ -153,16 +154,18 @@ final class ReportService {
                 .font: UIFont.systemFont(ofSize: 14),
                 .foregroundColor: UIColor.label
             ]
-            for line in [
-                "Average: \(String(format: "%.1f", report.averageDB)) dB",
-                "Peak: \(String(format: "%.1f", report.peakDB)) dB",
-                "Time above 85 dB: \(report.minutesAbove85) min",
+            let lines: [String] = [
+                String(format: String(localized: "report.pdf.average"), report.averageDB),
+                String(format: String(localized: "report.pdf.peak"), report.peakDB),
+                String(format: String(localized: "report.pdf.above85"), report.minutesAbove85),
                 "",
-                "Summary:",
+                String(localized: "report.pdf.summary_header"),
                 report.summary,
                 "",
-                "Recommendations:"
-            ] + report.recommendations {
+                String(localized: "report.pdf.recommendations_header")
+            ] + report.recommendations
+
+            for line in lines {
                 (line as NSString).draw(at: CGPoint(x: 40, y: yPos), withAttributes: statsAttrs)
                 yPos += 22
             }
