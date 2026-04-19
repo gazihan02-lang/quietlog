@@ -8,6 +8,7 @@ import WidgetKit
 struct QuietLogWidgetsBundle: WidgetBundle {
     var body: some Widget {
         CircularDBWidget()
+        RectangularDBWidget()
         SmallDBWidget()
         MediumDBWidget()
     }

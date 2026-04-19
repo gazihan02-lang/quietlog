@@ -46,12 +46,18 @@ struct DBWidgetProvider: TimelineProvider {
     // MARK: - Read latest sample from shared App Group UserDefaults
     private func latestEntry() -> DBWidgetEntry {
         // Widgets cannot run AVAudioEngine; they read last-saved value written by main app via WidgetUpdater
-        let defaults     = UserDefaults(suiteName: WidgetDataWriter.suiteName) ?? .standard
-        let db           = defaults.double(forKey: WidgetDataWriter.keyDB)
-        let peak         = defaults.double(forKey: WidgetDataWriter.keyPeak)
-        let avg          = defaults.double(forKey: WidgetDataWriter.keyAvg)
-        let isPro        = defaults.bool(forKey: WidgetDataWriter.keyIsPro)
-        let isActive     = defaults.bool(forKey: WidgetDataWriter.keyIsActive)
+        let defaults       = UserDefaults(suiteName: WidgetDataWriter.suiteName) ?? .standard
+        let db             = defaults.double(forKey: WidgetDataWriter.keyDB)
+        let peak           = defaults.double(forKey: WidgetDataWriter.keyPeak)
+        let avg            = defaults.double(forKey: WidgetDataWriter.keyAvg)
+        let isPro          = defaults.bool(forKey: WidgetDataWriter.keyIsPro)
+        let isActive       = defaults.bool(forKey: WidgetDataWriter.keyIsActive)
+        let lastWrite      = defaults.double(forKey: WidgetDataWriter.keyLastWriteTime)
+
+        // Crash guard: if isActive was set but the app crashed before clearing it,
+        // the timestamp will be stale. Treat any data older than 30 s as idle.
+        let age            = Date().timeIntervalSince1970 - lastWrite
+        let safeIsActive   = isActive && (lastWrite > 0) && (age < WidgetDataWriter.staleThreshold)
 
         return DBWidgetEntry(
             date: Date(),
@@ -60,7 +66,7 @@ struct DBWidgetProvider: TimelineProvider {
             peakDB: peak,
             averageDB: avg,
             isPro: isPro,
-            isSessionActive: isActive
+            isSessionActive: safeIsActive
         )
     }
 }
@@ -68,12 +74,16 @@ struct DBWidgetProvider: TimelineProvider {
 // MARK: - Widget Data Writer (legacy stub — actual writing is done by WidgetUpdater in main app)
 // This enum is kept as a namespace for the shared UserDefaults key constants.
 enum WidgetDataWriter {
-    static let suiteName  = "group.com.gazihan.quietlog"
+    static let suiteName      = "group.com.gazihan.quietlog"
 
     // Keys mirrored in WidgetUpdater (main app) and DBWidgetProvider (widget extension)
-    static let keyDB       = "widget.latestDB"
-    static let keyPeak     = "widget.peakDB"
-    static let keyAvg      = "widget.avgDB"
-    static let keyIsPro    = "widget.isPro"
-    static let keyIsActive = "widget.isActive"
+    static let keyDB            = "widget.latestDB"
+    static let keyPeak          = "widget.peakDB"
+    static let keyAvg           = "widget.avgDB"
+    static let keyIsPro         = "widget.isPro"
+    static let keyIsActive      = "widget.isActive"
+    static let keyLastWriteTime = "widget.lastWriteTime"
+
+    /// Maximum seconds before a non-zero dB reading is considered stale (app may have crashed).
+    static let staleThreshold: TimeInterval = 30
 }

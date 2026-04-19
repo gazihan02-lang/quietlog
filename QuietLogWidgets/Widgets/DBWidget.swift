@@ -35,23 +35,37 @@ struct CircularDBWidgetView: View {
 }
 
 // MARK: - Rectangular (Lock Screen) Widget
+struct RectangularDBWidget: Widget {
+    let kind = "RectangularDBWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: DBWidgetProvider()) { entry in
+            RectangularDBWidgetView(entry: entry)
+                .containerBackground(.fill.tertiary, for: .widget)
+        }
+        .configurationDisplayName("widget.rectangular.name")
+        .description("widget.rectangular.desc")
+        .supportedFamilies([.accessoryRectangular])
+    }
+}
+
 struct RectangularDBWidgetView: View {
     let entry: DBWidgetEntry
 
     var body: some View {
         HStack {
-            Image(systemName: entry.zone.symbol)
-                .foregroundStyle(entry.zone.fallbackColor)
+            Image(systemName: entry.isSessionActive ? entry.zone.symbol : "waveform.slash")
+                .foregroundStyle(entry.isSessionActive ? entry.zone.fallbackColor : .secondary)
             VStack(alignment: .leading) {
-                Text("\(Int(entry.currentDB)) dB")
+                Text(entry.isSessionActive ? "\(Int(entry.currentDB)) dB" : "--")
                     .font(.headline.bold())
-                Text(entry.zone.labelString)
+                Text(entry.isSessionActive ? entry.zone.labelString : String(localized: "widget.idle"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             Spacer()
         }
-        .widgetURL(URL(string: "quietlog://open"))
+        .widgetURL(URL(string: "quietlog://live"))
     }
 }
 
@@ -133,7 +147,7 @@ struct SmallDBWidgetView: View {
                 .multilineTextAlignment(.center)
         }
         .padding(12)
-        .widgetURL(URL(string: "quietlog://open"))
+        .widgetURL(URL(string: "quietlog://live"))
     }
 }
 
@@ -220,7 +234,7 @@ struct MediumDBWidgetView: View {
             Spacer()
         }
         .padding(16)
-        .widgetURL(URL(string: "quietlog://open"))
+        .widgetURL(URL(string: "quietlog://live"))
     }
 }
 

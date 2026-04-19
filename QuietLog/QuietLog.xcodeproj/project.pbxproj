@@ -272,6 +272,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>quietlog</string></array><key>CFBundleURLName</key><string>com.gazihan.quietlog</string></dict></array>";
 			};
 			name = Debug;
 		};
@@ -303,6 +304,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>quietlog</string></array><key>CFBundleURLName</key><string>com.gazihan.quietlog</string></dict></array>";
 			};
 			name = Release;
 		};

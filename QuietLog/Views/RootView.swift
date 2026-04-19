@@ -36,6 +36,27 @@ struct RootView: View {
         .onAppear {
             injectModelContext()
         }
+        .onOpenURL { url in
+            handleDeepLink(url)
+        }
+    }
+
+    // MARK: - Deep Link Handler
+    // quietlog://live  → Live Meter tab (from widget tap)
+    // quietlog://open  → Live Meter tab (legacy)
+    private func handleDeepLink(_ url: URL) {
+        switch url.host {
+        case "live", "open":
+            selectedTab = .now
+        case "history":
+            selectedTab = .history
+        case "health":
+            selectedTab = .health
+        case "settings":
+            selectedTab = .settings
+        default:
+            selectedTab = .now
+        }
     }
 
     // MARK: - Inject model context into services

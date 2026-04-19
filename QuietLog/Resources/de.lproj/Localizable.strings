@@ -177,8 +177,8 @@
 "notification.weekly.title"         = "Wöchentlicher Bericht bereit";
 "notification.weekly.body"          = "Ihr wöchentlicher Hörwert ist bereit.";
 "widget.circular.name"              = "dB-Pegel";
-"widget.circular.desc"              = "Zeigt den aktuellen Dezibel-Pegel.";
-"widget.small.name"                 = "QuietLog";
+"widget.circular.desc"              = "Zeigt den aktuellen Dezibel-Pegel.";"widget.rectangular.name"           = "dB-Detail";
+"widget.rectangular.desc"           = "Zone und Pegel auf dem Sperrbildschirm.";"widget.small.name"                 = "QuietLog";
 "widget.small.desc"                 = "Aktueller dB-Pegel auf einen Blick.";
 "widget.medium.name"                = "QuietLog Detail";
 "widget.medium.desc"                = "Aktueller dB, Spitzen- und Durchschnittswert.";

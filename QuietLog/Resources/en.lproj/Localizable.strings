@@ -222,6 +222,8 @@
 // MARK: - Widgets
 "widget.circular.name"              = "dB Level";
 "widget.circular.desc"              = "Shows current decibel level.";
+"widget.rectangular.name"           = "dB Detail";
+"widget.rectangular.desc"           = "Zone and dB level on the lock screen.";
 "widget.small.name"                 = "QuietLog";
 "widget.small.desc"                 = "Current dB level and zone at a glance.";
 "widget.medium.name"                = "QuietLog Detail";

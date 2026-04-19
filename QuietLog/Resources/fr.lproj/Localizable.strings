@@ -177,8 +177,8 @@
 "notification.weekly.title"         = "Rapport hebdomadaire prêt";
 "notification.weekly.body"          = "Votre score auditif hebdomadaire est disponible.";
 "widget.circular.name"              = "Niveau dB";
-"widget.circular.desc"              = "Affiche le niveau de décibels actuel.";
-"widget.small.name"                 = "QuietLog";
+"widget.circular.desc"              = "Affiche le niveau de décibels actuel.";"widget.rectangular.name"           = "Détail dB";
+"widget.rectangular.desc"           = "Zone et niveau dB sur l'écran verrouillé.";"widget.small.name"                 = "QuietLog";
 "widget.small.desc"                 = "Niveau dB et zone en un coup d'œil.";
 "widget.medium.name"                = "QuietLog Détail";
 "widget.medium.desc"                = "dB actuel, pic et moyenne.";

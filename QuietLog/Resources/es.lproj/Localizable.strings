@@ -178,6 +178,8 @@
 "notification.weekly.body"          = "Su puntuación auditiva semanal está lista.";
 "widget.circular.name"              = "Nivel dB";
 "widget.circular.desc"              = "Muestra el nivel de decibelios actual.";
+"widget.rectangular.name"           = "Detalle dB";
+"widget.rectangular.desc"           = "Zona y nivel dB en la pantalla bloqueada.";
 "widget.small.name"                 = "QuietLog";
 "widget.small.desc"                 = "Nivel dB y zona de un vistazo.";
 "widget.medium.name"                = "QuietLog Detalle";
