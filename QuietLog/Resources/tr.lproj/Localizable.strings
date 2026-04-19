@@ -1,0 +1,213 @@
+/* Localizable.strings — Turkish (tr) */
+
+"app.name" = "QuietLog";
+
+"tab.now"      = "Şimdi";
+"tab.history"  = "Geçmiş";
+"tab.health"   = "Sağlık";
+"tab.settings" = "Ayarlar";
+
+"zone.safe"      = "Güvenli";
+"zone.moderate"  = "Orta";
+"zone.loud"      = "Yüksek";
+"zone.dangerous" = "Tehlikeli";
+
+"zone.safe.advice"      = "Sakin ortam. İşitmeniz güvende.";
+"zone.moderate.advice"  = "Kalabalık bir restoran gibi. Uzun süreli maruz kalma güvenlidir.";
+"zone.loud.advice"      = "Elektrikli süpürge gibi. Maruziyeti 2 saatle sınırlayın.";
+"zone.dangerous.advice" = "Tehlikeli seviye. İşitmenizi hemen koruyun.";
+
+"zone.safe.duration"      = "Sınırsız";
+"zone.moderate.duration"  = "8 saat";
+"zone.loud.duration"      = "2 saat";
+"zone.dangerous.duration" = "< 15 dak";
+
+"meter.start_session"    = "Oturumu Başlat";
+"meter.stop_session"     = "Oturumu Durdur";
+"meter.calibrating"      = "Kalibre ediliyor…";
+
+"session.bar.duration"   = "Süre";
+"session.bar.average"    = "Ortalama";
+"session.bar.peak"       = "Tepe";
+
+"permission.microphone"  = "Mikrofon";
+"permission.notifications" = "Bildirimler";
+"permission.health"      = "Apple Sağlık";
+"permission.allow"       = "İzin Ver";
+"permission.continue"    = "Devam";
+"permission.open_settings" = "Ayarları Aç";
+
+"permission.mic.title"   = "Mikrofon Erişimi";
+"permission.mic.subtitle" = "QuietLog, mikrofonunuzu kullanarak gürültü seviyelerini ölçer. Sesiniz hiçbir zaman kaydedilmez veya yüklenmez.";
+"permission.notif.title"  = "Bilgilendirilmiş Kalın";
+"permission.notif.subtitle" = "Gürültü güvensiz seviyelere ulaştığında bildirim alın.";
+"permission.health.title"  = "Apple Sağlık";
+"permission.health.subtitle" = "Gürültü maruziyetinizi Apple Sağlık ile senkronize edin.";
+
+"permission.mic.denied.title" = "Mikrofon Erişimi Gerekli";
+"permission.mic.denied.body"  = "QuietLog, mikrofon erişimi olmadan ses ölçemez. Lütfen Ayarlar'dan etkinleştirin.";
+"permission.mic.denied.hint"  = "Mikrofon izni reddedildi.";
+
+"onboarding.welcome.title"    = "İşitmenizi Koruyun";
+"onboarding.welcome.subtitle" = "Gürültüyü ölçün. Hasarı önleyin. Tek dokunuşla.";
+"onboarding.welcome.cta"      = "Başlayın";
+"onboarding.welcome.restore"  = "Hesabım var";
+
+"onboarding.problem.title"    = "Sessiz Tehlike";
+"onboarding.problem.stat1"    = "işitme kaybı riski altındaki genç";
+"onboarding.problem.stat2"    = "hasarın başladığı seviye";
+"onboarding.problem.stat3"    = "işitme hasarının ne kadar sürdüğü";
+
+"onboarding.solution.title"   = "QuietLog Sizi Koruyor";
+"onboarding.solution.f1.title" = "Gerçek zamanlı ölçüm";
+"onboarding.solution.f1.desc"  = "Her an desibel seviyenizi bilin.";
+"onboarding.solution.f2.title" = "Akıllı uyarılar";
+"onboarding.solution.f2.desc"  = "Hasar oluşmadan önce sizi uyarırız.";
+"onboarding.solution.f3.title" = "Apple Sağlık";
+"onboarding.solution.f3.desc"  = "Tüm işitme verileriniz tek yerde.";
+
+"onboarding.continue" = "Devam";
+
+"paywall.onboarding.title"   = "QuietLog Pro'yu Aç";
+"paywall.contextual.title"   = "Pro Özellik";
+"paywall.subtitle"           = "Günlük gürültü maruziyetini takip eden binlere katılın.";
+"paywall.cta.trial"          = "3 Günlük Ücretsiz Deneme";
+"paywall.cta.subscribe"      = "Şimdi Abone Ol";
+"paywall.restore"            = "Satın Alımları Geri Yükle";
+"paywall.terms"              = "Kullanım Koşulları";
+"paywall.privacy"            = "Gizlilik Politikası";
+"paywall.close.accessibility" = "Kapat";
+"paywall.error.title"        = "Satın Alma Hatası";
+"paywall.badge.bestvalue"    = "En İyi Değer";
+"paywall.per_month"          = "%@ / ay";
+
+"paywall.trial.annual"   = "3 gün ücretsiz, sonra yıllık ₺999. İstediğiniz zaman iptal edin.";
+"paywall.trial.monthly"  = "3 gün ücretsiz, sonra aylık ₺129. İstediğiniz zaman iptal edin.";
+
+"paywall.feature.history"    = "Sınırsız geçmiş";
+"paywall.feature.health"     = "Apple Sağlık senkronizasyonu";
+"paywall.feature.alerts"     = "Akıllı tehlike uyarıları";
+"paywall.feature.widgets"    = "Ana Ekran ve Kilit Ekranı widget'ları";
+"paywall.feature.report"     = "Haftalık işitme raporu";
+"paywall.feature.headphones" = "Kulaklık takibi";
+"paywall.feature.all"        = "QuietLog Pro";
+
+"history.title"              = "Geçmiş";
+"history.scope.day"          = "Gün";
+"history.scope.week"         = "Hafta";
+"history.scope.month"        = "Ay";
+"history.scope.year"         = "Yıl";
+"history.stat.average"       = "Ortalama";
+"history.stat.peak"          = "Tepe";
+"history.stat.over85"        = "85 dB üzeri";
+"history.notable.title"      = "Önemli olaylar";
+"history.no_data"            = "Henüz veri yok. Geçmişinizi görmek için bir oturum başlatın.";
+"history.export.csv"         = "CSV Dışa Aktar";
+
+"health.title"               = "Sağlık";
+"health.status.title"        = "Apple Sağlık";
+"health.status.enabled"      = "Bağlı";
+"health.status.disabled"     = "Devre dışı";
+"health.status.denied"       = "Erişim reddedildi";
+"health.status.unknown"      = "Kurulmadı";
+"health.write_toggle"        = "Apple Sağlık'a yaz";
+"health.read_toggle"         = "Apple Watch verilerini oku";
+"health.last_sync"           = "Son senkronizasyon: %@";
+"health.records_written"     = "%d kayıt yazıldı";
+"health.weekly_report.title" = "Haftalık Rapor";
+"health.weekly_report.view"  = "Görüntüle";
+"health.pro_only.title"      = "Sağlık Senkronizasyonu Sadece Pro'da";
+"health.pro_only.subtitle"   = "Apple Sağlık ile senkronize etmek ve haftalık raporlar almak için QuietLog Pro'ya yükseltin.";
+"health.export.csv"          = "CSV Dışa Aktar";
+"health.export.json"         = "JSON Dışa Aktar";
+"health.export.pdf"          = "PDF Dışa Aktar";
+
+"report.title"               = "Haftalık İşitme Raporu";
+"report.score.label"         = "Puan";
+"report.score.excellent"     = "Mükemmel. Kulakların bu hafta huzurluydu.";
+"report.score.good"          = "İyi. Küçük yüksek sesler ama genel olarak güvenli.";
+"report.score.caution"       = "Dikkat. Önemli gürültü maruziyeti. Mola almayı düşünün.";
+"report.score.atrisk"        = "Risk altında. Tekrarlayan yüksek maruziyet. Önerilere bakın.";
+"report.chart.title"         = "7 Günlük Özet";
+"report.stat.average"        = "Ortalama";
+"report.stat.peak"           = "Tepe";
+"report.stat.above85"        = "85 dB Üzeri";
+"report.stat.total"          = "Toplam Süre";
+"report.recommendations.title" = "Öneriler";
+"report.disclaimer"          = "QuietLog bir tıbbi cihaz değildir. Ölçümler yaklaşıktır (±3 dB).";
+"report.share"               = "Paylaş";
+"report.summary.nodata"      = "Bu hafta veri kaydedilmedi.";
+"report.summary.excellent"   = "Kulakların bu hafta sakin ve sağlıklıydı!";
+"report.summary.moderate"    = "Bu hafta %d dakika güvenli seviyelerin üzerinde geçirdiniz.";
+"report.summary.high"        = "Bu hafta %d dakika güvenli seviyelerin üzerinde geçirdiniz. Mola almayı düşünün.";
+
+"recommendation.lower_volume"    = "Kulaklık sesini kısın. 60/60 kuralını deneyin: maksimum 60 dakika için %60 ses.";
+"recommendation.take_breaks"     = "Düzenli işitme molaları verin.";
+"recommendation.ear_protection"  = "Gürültülü ortamlarda tıkaç veya gürültü önleyici kulaklık kullanmayı düşünün.";
+"recommendation.quiet_time"      = "Kulakların iyileşmesi için her gün sessiz zaman ayırın.";
+"recommendation.keep_it_up"      = "Harika! Bu hafta gürültü maruziyetiniz güvenli sınırlar içindeydi.";
+"recommendation.start_tracking"  = "Takibe başlamak için Şimdi sekmesinden bir oturum başlatın.";
+
+"settings.title"                    = "Ayarlar";
+"settings.section.subscription"     = "Abonelik";
+"settings.section.thresholds"       = "Eşikler";
+"settings.section.health"           = "Sağlık";
+"settings.section.notifications"    = "Bildirimler";
+"settings.section.data"             = "Veri";
+"settings.section.about"            = "Hakkında";
+"settings.row.plan"                 = "Plan";
+"settings.row.manage"               = "Aboneliği Yönet";
+"settings.row.restore"              = "Satın Alımları Geri Yükle";
+"settings.row.upgrade"              = "Pro'ya Yükselt →";
+"settings.row.danger_threshold"     = "Tehlike eşiği";
+"settings.row.reset_calibration"    = "Kalibrasyonu sıfırla";
+"settings.row.notify_danger"        = "Tehlike uyarıları";
+"settings.row.notify_daily"         = "Günlük özet";
+"settings.row.notify_weekly"        = "Haftalık rapor";
+"settings.row.export"               = "Veriyi dışa aktar";
+"settings.row.delete_all"           = "Tüm verileri sil";
+"settings.row.privacy_policy"       = "Gizlilik Politikası";
+"settings.row.terms"                = "Kullanım Koşulları";
+"settings.row.rate"                 = "QuietLog'u Değerlendir";
+"settings.row.support"              = "Destek İletişimi";
+"settings.row.version"              = "Sürüm";
+"settings.plan.free"                = "Ücretsiz";
+"settings.plan.pro"                 = "Pro";
+"settings.sensitivity.low"          = "Düşük";
+"settings.sensitivity.medium"       = "Orta";
+"settings.sensitivity.high"         = "Yüksek";
+"settings.calibration.reset"        = "Kalibrasyon varsayılana sıfırlandı.";
+"settings.data.deleted"             = "Tüm veriler silindi.";
+"settings.disclaimer"               = "QuietLog yalnızca bilgilendirme amaçlıdır. Tıbbi bir cihaz değildir.";
+"settings.delete.confirm.title"     = "Tüm Veriler Silinsin mi?";
+"settings.delete.confirm.message"   = "Bu işlem tüm gürültü geçmişinizi kalıcı olarak siler.";
+"settings.delete.confirm.action"    = "Tümünü Sil";
+
+"alert.type.instant_spike"          = "Gürültü Artışı";
+"alert.type.cumulative"             = "Kümülatif Maruziyet";
+"alert.type.headphone_weekly"       = "Kulaklık Kullanımı";
+"alert.instant.title"               = "Yüksek Gürültü Uyarısı";
+"alert.instant.body"                = "Çevreniz %d dB seviyesinde. İşitmenizi korumayı düşünün.";
+"alert.cumulative.title"            = "Maruziyet Uyarısı";
+"alert.cumulative.body"             = "Bugünkü ortalama maruziyetiniz %d dB'e ulaştı.";
+"alert.headphone.weekly.title"      = "Kulaklık Kullanımı";
+"alert.headphone.weekly.body"       = "Bu hafta 80 dB üzerinde 40 saati aştınız.";
+
+"notification.daily.title"          = "Bugünkü İşitme Özeti";
+"notification.daily.body"           = "Bugünkü gürültü maruziyetini incelemek için QuietLog'u açın.";
+"notification.weekly.title"         = "Haftalık İşitme Raporu Hazır";
+"notification.weekly.body"          = "Bu haftaki işitme puanınız hazır.";
+
+"widget.circular.name"              = "dB Seviyesi";
+"widget.circular.desc"              = "Anlık desibel seviyesini gösterir.";
+"widget.small.name"                 = "QuietLog";
+"widget.small.desc"                 = "Anlık dB seviyesi ve bölgesi.";
+"widget.medium.name"                = "QuietLog Detay";
+"widget.medium.desc"                = "Anlık dB, tepe ve ortalama.";
+"widget.now"                        = "ŞİMDİ";
+"widget.updated"                    = "Az önce güncellendi";
+
+"common.ok"     = "Tamam";
+"common.cancel" = "İptal";
+"common.done"   = "Bitti";
+"common.notice" = "Bildirim";

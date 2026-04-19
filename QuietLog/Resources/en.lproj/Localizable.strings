@@ -1,0 +1,234 @@
+/* Localizable.strings — English (en) */
+
+// MARK: - App
+"app.name" = "QuietLog";
+
+// MARK: - Tabs
+"tab.now"      = "Now";
+"tab.history"  = "History";
+"tab.health"   = "Health";
+"tab.settings" = "Settings";
+
+// MARK: - DB Zones
+"zone.safe"      = "Safe";
+"zone.moderate"  = "Moderate";
+"zone.loud"      = "Loud";
+"zone.dangerous" = "Dangerous";
+
+"zone.safe.advice"      = "Quiet environment. Your hearing is safe.";
+"zone.moderate.advice"  = "Like a busy restaurant. Safe for extended periods.";
+"zone.loud.advice"      = "Like a vacuum cleaner. Limit exposure to 2 hours.";
+"zone.dangerous.advice" = "Dangerous level. Protect your hearing immediately.";
+
+"zone.safe.duration"      = "Unlimited";
+"zone.moderate.duration"  = "8 hours";
+"zone.loud.duration"      = "2 hours";
+"zone.dangerous.duration" = "< 15 min";
+
+// MARK: - Live Meter
+"meter.start_session"    = "Start Session";
+"meter.stop_session"     = "Stop Session";
+"meter.calibrating"      = "Calibrating…";
+
+// MARK: - Session Bar
+"session.bar.duration"   = "Duration";
+"session.bar.average"    = "Average";
+"session.bar.peak"       = "Peak";
+
+// MARK: - Permissions
+"permission.microphone"  = "Microphone";
+"permission.notifications" = "Notifications";
+"permission.health"      = "Apple Health";
+"permission.allow"       = "Allow Access";
+"permission.continue"    = "Continue";
+"permission.open_settings" = "Open Settings";
+
+"permission.mic.title"   = "Microphone Access";
+"permission.mic.subtitle" = "QuietLog measures noise levels using your microphone. Your audio is never recorded or uploaded — only decibel readings are calculated.";
+"permission.notif.title"  = "Stay Informed";
+"permission.notif.subtitle" = "Get notified when noise becomes unsafe, so you can protect your hearing before damage occurs.";
+"permission.health.title"  = "Apple Health";
+"permission.health.subtitle" = "Sync your noise exposure with Apple Health for a complete picture of your hearing environment.";
+
+"permission.mic.denied.title" = "Microphone Access Needed";
+"permission.mic.denied.body"  = "QuietLog cannot measure sound without microphone access. Please enable it in Settings.";
+"permission.mic.denied.hint"  = "Microphone permission denied. Some features won't work.";
+
+// MARK: - Onboarding
+"onboarding.welcome.title"    = "Protect Your Hearing";
+"onboarding.welcome.subtitle" = "Measure noise. Prevent damage. In one tap.";
+"onboarding.welcome.cta"      = "Get Started";
+"onboarding.welcome.restore"  = "I have an account";
+
+"onboarding.problem.title"    = "The Silent Risk";
+"onboarding.problem.stat1"    = "young people at risk of hearing loss";
+"onboarding.problem.stat2"    = "the level where damage begins";
+"onboarding.problem.stat3"    = "how long hearing damage lasts";
+
+"onboarding.solution.title"   = "QuietLog Has You Covered";
+"onboarding.solution.f1.title" = "Real-time meter";
+"onboarding.solution.f1.desc"  = "Know your decibels in any moment.";
+"onboarding.solution.f2.title" = "Smart alerts";
+"onboarding.solution.f2.desc"  = "We warn you before damage occurs.";
+"onboarding.solution.f3.title" = "Apple Health";
+"onboarding.solution.f3.desc"  = "All your hearing data in one place.";
+
+"onboarding.continue" = "Continue";
+
+// MARK: - Paywall
+"paywall.onboarding.title"   = "Unlock QuietLog Pro";
+"paywall.contextual.title"   = "Pro Feature";
+"paywall.subtitle"           = "Join thousands who track their daily noise exposure with QuietLog Pro.";
+"paywall.cta.trial"          = "Start 3-Day Free Trial";
+"paywall.cta.subscribe"      = "Subscribe Now";
+"paywall.restore"            = "Restore Purchases";
+"paywall.terms"              = "Terms";
+"paywall.privacy"            = "Privacy Policy";
+"paywall.close.accessibility" = "Close";
+"paywall.error.title"        = "Purchase Error";
+"paywall.badge.bestvalue"    = "Best Value";
+"paywall.per_month"          = "%@ / month";
+
+"paywall.trial.annual"   = "3 days free, then $29.99/year. Cancel anytime.";
+"paywall.trial.monthly"  = "3 days free, then $4.99/month. Cancel anytime.";
+
+"paywall.feature.history"    = "Unlimited history";
+"paywall.feature.health"     = "Apple Health sync";
+"paywall.feature.alerts"     = "Smart danger alerts";
+"paywall.feature.widgets"    = "Home & Lock Screen widgets";
+"paywall.feature.report"     = "Weekly hearing report";
+"paywall.feature.headphones" = "Headphone tracking";
+"paywall.feature.all"        = "QuietLog Pro";
+
+// MARK: - History
+"history.title"              = "History";
+"history.scope.day"          = "Day";
+"history.scope.week"         = "Week";
+"history.scope.month"        = "Month";
+"history.scope.year"         = "Year";
+"history.stat.average"       = "Average";
+"history.stat.peak"          = "Peak";
+"history.stat.over85"        = "Time > 85 dB";
+"history.notable.title"      = "Notable events";
+"history.no_data"            = "No data yet. Start a session to see your history.";
+"history.export.csv"         = "Export CSV";
+
+// MARK: - Health
+"health.title"               = "Health";
+"health.status.title"        = "Apple Health";
+"health.status.enabled"      = "Connected";
+"health.status.disabled"     = "Disabled";
+"health.status.denied"       = "Access denied";
+"health.status.unknown"      = "Not set up";
+"health.write_toggle"        = "Write to Apple Health";
+"health.read_toggle"         = "Read Watch data";
+"health.last_sync"           = "Last sync: %@";
+"health.records_written"     = "%d records written";
+"health.weekly_report.title" = "Weekly Report";
+"health.weekly_report.view"  = "View";
+"health.pro_only.title"      = "Health Sync is Pro Only";
+"health.pro_only.subtitle"   = "Upgrade to QuietLog Pro to sync with Apple Health and get weekly reports.";
+"health.export.csv"          = "Export CSV";
+"health.export.json"         = "Export JSON";
+"health.export.pdf"          = "Export PDF";
+
+// MARK: - Weekly Report
+"report.title"               = "Weekly Hearing Report";
+"report.score.label"         = "Score";
+"report.score.excellent"     = "Excellent. Your ears had a peaceful week.";
+"report.score.good"          = "Good. Minor loud moments but overall safe.";
+"report.score.caution"       = "Caution. Significant loud exposure. Consider breaks.";
+"report.score.atrisk"        = "At risk. Repeated high exposure. See the recommendations.";
+"report.chart.title"         = "7-Day Overview";
+"report.stat.average"        = "Average";
+"report.stat.peak"           = "Peak";
+"report.stat.above85"        = "Above 85 dB";
+"report.stat.total"          = "Total Time";
+"report.recommendations.title" = "Recommendations";
+"report.disclaimer"          = "QuietLog is not a medical device. Measurements are approximate (±3 dB). Not for occupational health compliance use.";
+"report.share"               = "Share";
+"report.summary.nodata"      = "No data recorded this week. Start tracking to see your report.";
+"report.summary.excellent"   = "Your ears had a quiet, healthy week. Keep it up!";
+"report.summary.moderate"    = "You spent %d minutes above safe levels this week. Monitor your exposure.";
+"report.summary.high"        = "You spent %d minutes above safe levels this week. Consider taking breaks from loud environments.";
+
+// MARK: - Recommendations
+"recommendation.lower_volume"    = "Lower your headphone volume. Try the 60/60 rule: 60% volume for max 60 minutes.";
+"recommendation.take_breaks"     = "Take regular hearing breaks — 15 minutes of quiet for every hour of noise.";
+"recommendation.ear_protection"  = "Consider using earplugs or noise-cancelling headphones in loud environments.";
+"recommendation.quiet_time"      = "Give your ears some quiet time each day to recover.";
+"recommendation.keep_it_up"      = "Great job! Your noise exposure was well within safe limits this week.";
+"recommendation.start_tracking"  = "Start a session from the Now tab to begin tracking your hearing health.";
+
+// MARK: - Settings
+"settings.title"                    = "Settings";
+"settings.section.subscription"     = "Subscription";
+"settings.section.thresholds"       = "Thresholds";
+"settings.section.health"           = "Health";
+"settings.section.notifications"    = "Notifications";
+"settings.section.data"             = "Data";
+"settings.section.about"            = "About";
+
+"settings.row.plan"                 = "Plan";
+"settings.row.manage"               = "Manage Subscription";
+"settings.row.restore"              = "Restore Purchases";
+"settings.row.upgrade"              = "Upgrade to Pro →";
+"settings.row.danger_threshold"     = "Danger threshold";
+"settings.row.reset_calibration"    = "Reset calibration";
+"settings.row.notify_danger"        = "Danger alerts";
+"settings.row.notify_daily"         = "Daily summary";
+"settings.row.notify_weekly"        = "Weekly report";
+"settings.row.export"               = "Export data";
+"settings.row.delete_all"           = "Delete all data";
+"settings.row.privacy_policy"       = "Privacy Policy";
+"settings.row.terms"                = "Terms of Service";
+"settings.row.rate"                 = "Rate QuietLog";
+"settings.row.support"              = "Contact Support";
+"settings.row.version"              = "Version";
+
+"settings.plan.free"                = "Free";
+"settings.plan.pro"                 = "Pro";
+"settings.sensitivity.low"          = "Low";
+"settings.sensitivity.medium"       = "Medium";
+"settings.sensitivity.high"         = "High";
+"settings.calibration.reset"        = "Calibration reset to default.";
+"settings.data.deleted"             = "All data has been deleted.";
+"settings.disclaimer"               = "QuietLog is for informational purposes only. It is not a medical device and cannot diagnose hearing loss. Microphone measurements are approximate. Consult a healthcare professional for medical advice.";
+
+"settings.delete.confirm.title"     = "Delete All Data?";
+"settings.delete.confirm.message"   = "This will permanently delete all your noise history. This action cannot be undone.";
+"settings.delete.confirm.action"    = "Delete All";
+
+// MARK: - Alerts
+"alert.type.instant_spike"          = "Noise Spike";
+"alert.type.cumulative"             = "Cumulative Exposure";
+"alert.type.headphone_weekly"       = "Headphone Usage";
+
+"alert.instant.title"               = "Loud Noise Alert";
+"alert.instant.body"                = "Your surroundings are at %d dB. Consider protecting your hearing.";
+"alert.cumulative.title"            = "Exposure Warning";
+"alert.cumulative.body"             = "Your average exposure today has reached %d dB. Take a break.";
+"alert.headphone.weekly.title"      = "Headphone Usage";
+"alert.headphone.weekly.body"       = "You've exceeded 40 hours of headphone use above 80 dB this week. This may damage your hearing.";
+
+// MARK: - Notifications
+"notification.daily.title"          = "Today's Hearing Summary";
+"notification.daily.body"           = "Open QuietLog to review today's noise exposure.";
+"notification.weekly.title"         = "Weekly Hearing Report Ready";
+"notification.weekly.body"          = "Your weekly hearing score is ready. Tap to see how your ears did this week.";
+
+// MARK: - Widgets
+"widget.circular.name"              = "dB Level";
+"widget.circular.desc"              = "Shows current decibel level.";
+"widget.small.name"                 = "QuietLog";
+"widget.small.desc"                 = "Current dB level and zone at a glance.";
+"widget.medium.name"                = "QuietLog Detail";
+"widget.medium.desc"                = "Current dB, peak, and average.";
+"widget.now"                        = "NOW";
+"widget.updated"                    = "Updated just now";
+
+// MARK: - Common
+"common.ok"     = "OK";
+"common.cancel" = "Cancel";
+"common.done"   = "Done";
+"common.notice" = "Notice";

@@ -1,0 +1,94 @@
+{
+  "identifier" : "com.gazihan.quietlog.storekit",
+  "nonConsumablePurchases" : [
+    {
+      "displayPrice" : "49.99",
+      "familyShareable" : true,
+      "internalID" : "lifetime_pro_001",
+      "localizations" : [
+        {
+          "description" : "QuietLog Pro — one-time purchase, lifetime access.",
+          "displayName" : "QuietLog Pro Lifetime",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.gazihan.quietlog.lifetime",
+      "referenceName" : "Pro Lifetime",
+      "type" : "NonConsumable"
+    }
+  ],
+  "products" : [],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_interruptedPurchasesEnabled" : false,
+    "_storeKitErrorsEnabled" : false,
+    "_timeRate" : "MONTHLY_RENEWAL_EVERY_30_MINUTES"
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "quietlog_pro_group",
+      "localizations" : [],
+      "name" : "QuietLog Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "displayPrice" : "4.99",
+          "familyShareable" : true,
+          "freeTrialOffers" : [
+            {
+              "duration" : "P3D",
+              "id" : "trial_monthly_3day",
+              "offerID" : "trial_monthly_3day",
+              "paymentMode" : "FREE_TRIAL"
+            }
+          ],
+          "groupLevel" : 2,
+          "internalID" : "monthly_pro_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Access all QuietLog Pro features, billed monthly.",
+              "displayName" : "QuietLog Pro Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.gazihan.quietlog.pro.monthly",
+          "referenceName" : "Pro Monthly",
+          "subscriptionPeriod" : "P1M",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "displayPrice" : "29.99",
+          "familyShareable" : true,
+          "freeTrialOffers" : [
+            {
+              "duration" : "P3D",
+              "id" : "trial_annual_3day",
+              "offerID" : "trial_annual_3day",
+              "paymentMode" : "FREE_TRIAL"
+            }
+          ],
+          "groupLevel" : 1,
+          "internalID" : "annual_pro_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Access all QuietLog Pro features, billed annually.",
+              "displayName" : "QuietLog Pro Annual",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.gazihan.quietlog.pro.annual",
+          "referenceName" : "Pro Annual",
+          "subscriptionPeriod" : "P1Y",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
