@@ -113,9 +113,10 @@ final class SubscriptionService: @unchecked Sendable {
             if case .verified(let t) = result {
                 if ProductID(rawValue: t.productID) != nil {
                     if t.revocationDate == nil {
-                        // Check expiration for subscriptions
+                        // hasPro = hasPro || ... prevents a later expired subscription
+                        // from overwriting a valid lifetime or earlier valid subscription
                         if let expiry = t.expirationDate {
-                            hasPro = expiry > Date()
+                            hasPro = hasPro || (expiry > Date())
                         } else {
                             hasPro = true  // lifetime
                         }

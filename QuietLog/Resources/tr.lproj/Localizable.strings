@@ -190,6 +190,8 @@
 "alert.instant.body"                = "Çevreniz %d dB seviyesinde. İşitmenizi korumayı düşünün.";
 "alert.cumulative.title"            = "Maruziyet Uyarısı";
 "alert.cumulative.body"             = "Bugünkü ortalama maruziyetiniz %d dB'e ulaştı.";
+"alert.autostop.title"              = "Oturum Sona Erdi";
+"alert.autostop.body"               = "QuietLog 4 saatlik izlemenin ardından otomatik olarak durdu.";
 "alert.headphone.weekly.title"      = "Kulaklık Kullanımı";
 "alert.headphone.weekly.body"       = "Bu hafta 80 dB üzerinde 40 saati aştınız.";
 

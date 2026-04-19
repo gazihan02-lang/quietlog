@@ -4,12 +4,23 @@
 import Foundation
 import AVFoundation
 import Combine
+import os
+
+// MARK: - Audio Thread State (lock-protected, accessed from AVAudioEngine callback)
+private struct TapState: Sendable {
+    var accumulator: [Double]     = []
+    var lastStorageTime: Date     = Date()
+    var latestDB: Double          = 0
+    var latestSource: SampleSource = .environmental
+    var isHeadphone: Bool         = false
+    var calibrationOffset: Double = 0
+}
 
 // MARK: - Audio Meter Service
 /// Runs AVAudioEngine, computes dB levels, publishes values to observers.
 @Observable
 @MainActor
-final class AudioMeterService: @unchecked Sendable {
+final class AudioMeterService {
 
     static let shared = AudioMeterService()
     private init() {}
@@ -35,9 +46,10 @@ final class AudioMeterService: @unchecked Sendable {
     private var calibrationTimer: Task<Void, Never>?
     private var routeChangeObserver: NSObjectProtocol?
 
-    // Internal accumulation for 1-second storage
-    private var secondAccumulator: [Double] = []
-    private var lastStorageTime: Date = Date()
+    // Thread-safe tap state (read/written from audio thread via lock)
+    private let tapState = OSAllocatedUnfairLock(initialState: TapState())
+    // 5 Hz UI timer — publishes currentDB on MainActor without spawning a Task per audio buffer
+    private var uiTimer: Timer?
 
     // Callbacks
     var onNewSample: ((Double, SampleSource) -> Void)?  // called every 1 second
@@ -117,6 +129,17 @@ final class AudioMeterService: @unchecked Sendable {
             try audioEngine.start()
             isRunning = true
 
+            // Cache calibration offset into tapState so the audio thread can read it safely
+            let offset = CalibrationService.shared.totalOffset
+            tapState.withLock { $0.calibrationOffset = offset }
+
+            // 5 Hz timer: reads latestDB from tapState and pushes to @Observable properties
+            uiTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { [weak self] _ in
+                guard let self else { return }
+                let db = self.tapState.withLock { $0.latestDB }
+                self.publishDB(db)
+            }
+
             // Show calibrating for 2 seconds
             isCalibrating = true
             calibrationTimer = Task {
@@ -138,6 +161,10 @@ final class AudioMeterService: @unchecked Sendable {
         calibrationTimer?.cancel()
         calibrationTimer = nil
 
+        uiTimer?.invalidate()
+        uiTimer = nil
+        tapState.withLock { $0 = TapState() }
+
         if tapInstalled {
             audioEngine.inputNode.removeTap(onBus: 0)
             tapInstalled = false
@@ -149,55 +176,45 @@ final class AudioMeterService: @unchecked Sendable {
         isCalibrating  = false
         currentDB      = 0.0
         currentZone    = .safe
-        secondAccumulator = []
     }
 
-    // MARK: - Buffer Processing (runs on audio thread)
-    private func processTapBuffer(_ buffer: AVAudioPCMBuffer) {
+    // MARK: - Buffer Processing (runs on audio thread — fully nonisolated)
+    nonisolated private func processTapBuffer(_ buffer: AVAudioPCMBuffer) {
         guard let channelData = buffer.floatChannelData else { return }
         let frameCount = Int(buffer.frameLength)
         guard frameCount > 0 else { return }
 
-        let channelPointer = channelData[0]
+        // Snapshot calibration offset from lock (written on MainActor)
+        let calibOffset = tapState.withLock { $0.calibrationOffset }
 
-        // Compute RMS
-        var sum: Float = 0
-        for i in 0..<frameCount {
-            let sample = channelPointer[i]
-            sum += sample * sample
+        // All DSP is local — no MainActor state touched here
+        let dba = DBCalculator.processBuffer(
+            samples: channelData[0],
+            count: frameCount,
+            calibrationOffset: calibOffset
+        )
+
+        // Accumulate; returns a 1-second average only once per second
+        let result: (avg: Double, source: SampleSource)? = tapState.withLock { state in
+            state.latestDB = dba
+            let source: SampleSource = state.isHeadphone ? .headphone : .environmental
+            state.latestSource = source
+            state.accumulator.append(dba)
+            let now = Date()
+            guard now.timeIntervalSince(state.lastStorageTime) >= 1.0 else { return nil }
+            let avg = state.accumulator.reduce(0, +) / Double(state.accumulator.count)
+            state.accumulator.removeAll()
+            state.lastStorageTime = now
+            return (avg, source)
         }
-        let rms = sqrt(sum / Float(frameCount))
 
-        // dBFS
-        let dbFS = 20.0 * log10(max(Double(rms), 1e-9))
-
-        // dBA approximation: dBFS + calibrationOffset + 90
-        let calibration = CalibrationService.shared.totalOffset
-        let dba = (dbFS + 90.0 + calibration).clamped(to: 0...140)
-
-        // Determine source
-        let source: SampleSource = isHeadphoneConnected ? .headphone : .environmental
-
-        // Accumulate for 1-second storage
-        secondAccumulator.append(dba)
-
-        let now = Date()
-        if now.timeIntervalSince(lastStorageTime) >= storageInterval {
-            let avgDB = secondAccumulator.isEmpty ? dba :
-                secondAccumulator.reduce(0, +) / Double(secondAccumulator.count)
-            secondAccumulator.removeAll()
-            lastStorageTime = now
-            let avgToStore = avgDB
-            let sourceToStore = source
+        // Dispatch 1-second sample to MainActor (≤1 Task/sec — no Task spam)
+        if let (avg, source) = result {
             Task { @MainActor [weak self] in
-                self?.onNewSample?(avgToStore, sourceToStore)
+                self?.onNewSample?(avg, source)
             }
         }
-
-        // Update UI at lower frequency
-        Task { @MainActor [weak self] in
-            self?.publishDB(dba)
-        }
+        // UI refresh is handled by the 5 Hz uiTimer — no per-buffer Task needed
     }
 
     @MainActor
@@ -216,12 +233,15 @@ final class AudioMeterService: @unchecked Sendable {
             .headphones, .bluetoothA2DP, .bluetoothHFP, .airPlay
         ]
         if let headphone = outputs.first(where: { headphoneTypes.contains($0.portType) }) {
-            isHeadphoneConnected  = true
+            isHeadphoneConnected   = true
             connectedHeadphoneName = headphone.portName
         } else {
-            isHeadphoneConnected  = false
+            isHeadphoneConnected   = false
             connectedHeadphoneName = nil
         }
+        // Mirror to tapState so audio thread can determine SampleSource without touching MainActor
+        let isHP = isHeadphoneConnected
+        tapState.withLock { $0.isHeadphone = isHP }
     }
 }
 

@@ -69,6 +69,14 @@ final class NotificationService {
         recordAlert(type: .cumulative)
     }
 
+    func sendAutoStopAlert() {
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "alert.autostop.title")
+        content.body  = String(localized: "alert.autostop.body")
+        content.sound = .default
+        schedule(content: content, id: "autostop_\(Date().timeIntervalSince1970)")
+    }
+
     func sendHeadphoneWeeklyAlert() {
         guard UserPreferences.shared.notifyOnDanger else { return }
         guard shouldSendAlert(type: .headphoneWeekly) else { return }

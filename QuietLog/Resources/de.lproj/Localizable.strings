@@ -168,6 +168,8 @@
 "alert.instant.body"                = "Ihre Umgebung hat %d dB. Schützen Sie Ihr Gehör.";
 "alert.cumulative.title"            = "Expositionswarnung";
 "alert.cumulative.body"             = "Ihr Tagesdurchschnitt hat %d dB erreicht.";
+"alert.autostop.title"              = "Sitzung beendet";
+"alert.autostop.body"               = "QuietLog wurde nach 4 Stunden Überwachung automatisch gestoppt.";
 "alert.headphone.weekly.title"      = "Kopfhörernutzung";
 "alert.headphone.weekly.body"       = "Sie haben diese Woche 40 Stunden über 80 dB überschritten.";
 "notification.daily.title"          = "Heutige Zusammenfassung";

@@ -62,14 +62,16 @@ final class HealthKitService {
     func enqueueSample(db: Double, source: SampleSource, date: Date = Date()) {
         guard UserPreferences.shared.healthKitWriteEnabled, isAuthorized else { return }
         batchBuffer.append((date: date, db: db, source: source))
+        startBatchTimerIfNeeded()
+    }
 
-        // Ensure batch timer is running
-        if batchTimer == nil {
-            batchTimer = Task { [weak self] in
-                while !Task.isCancelled {
-                    try? await Task.sleep(for: .seconds(60))
-                    await self?.flushBatch()
-                }
+    /// Starts the batch flush timer if it is not already running.
+    func startBatchTimerIfNeeded() {
+        guard batchTimer == nil else { return }
+        batchTimer = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(60))
+                await self?.flushBatch()
             }
         }
     }
@@ -91,7 +93,8 @@ final class HealthKitService {
            let envType = HKObjectType.quantityType(forIdentifier: .environmentalAudioExposure) {
             let avg = envSamples.map(\.db).reduce(0, +) / Double(envSamples.count)
             let start = envSamples.min(by: { $0.date < $1.date })?.date ?? Date()
-            let end   = envSamples.max(by: { $0.date < $1.date })?.date ?? Date()
+            var end   = envSamples.max(by: { $0.date < $1.date })?.date ?? Date()
+            if end <= start { end = start.addingTimeInterval(1) }
             let qty = HKQuantity(unit: dbaUnit, doubleValue: avg)
             samples.append(HKQuantitySample(type: envType, quantity: qty, start: start, end: end))
         }
@@ -102,7 +105,8 @@ final class HealthKitService {
            let hpType = HKObjectType.quantityType(forIdentifier: .headphoneAudioExposure) {
             let avg = hpSamples.map(\.db).reduce(0, +) / Double(hpSamples.count)
             let start = hpSamples.min(by: { $0.date < $1.date })?.date ?? Date()
-            let end   = hpSamples.max(by: { $0.date < $1.date })?.date ?? Date()
+            var end   = hpSamples.max(by: { $0.date < $1.date })?.date ?? Date()
+            if end <= start { end = start.addingTimeInterval(1) }
             let qty = HKQuantity(unit: dbaUnit, doubleValue: avg)
             samples.append(HKQuantitySample(type: hpType, quantity: qty, start: start, end: end))
         }
@@ -115,6 +119,8 @@ final class HealthKitService {
             lastSyncDate = Date()
             syncError = nil
         } catch {
+            // Re-queue the data so it is not silently lost on failure
+            batchBuffer.insert(contentsOf: toWrite, at: 0)
             syncError = error.localizedDescription
         }
     }

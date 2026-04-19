@@ -31,6 +31,8 @@ struct QuietLogApp: App {
     @State private var hapticsService      = HapticsService.shared
     @State private var notificationService = NotificationService.shared
 
+    @Environment(\.scenePhase) private var scenePhase
+
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
@@ -47,6 +49,20 @@ struct QuietLogApp: App {
             .environment(notificationService)
         }
         .modelContainer(sharedModelContainer)
+        .onChange(of: scenePhase) { _, newPhase in
+            switch newPhase {
+            case .background:
+                // Flush pending HealthKit samples before going to background,
+                // then stop the timer to avoid it firing while suspended.
+                Task { await HealthKitService.shared.flushBatch() }
+                HealthKitService.shared.stopBatchTimer()
+            case .active:
+                // Restart the timer when the app returns to foreground.
+                HealthKitService.shared.startBatchTimerIfNeeded()
+            default:
+                break
+            }
+        }
     }
 
     // MARK: - Init

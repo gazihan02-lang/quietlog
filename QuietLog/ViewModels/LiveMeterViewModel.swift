@@ -26,9 +26,9 @@ final class LiveMeterViewModel {
     var dailyBudget: ExposureCalculator.DailyBudget =
         ExposureCalculator.DailyBudget(consumed: 0, remainingSeconds: 8 * 3600)
 
-    // Spike tracking for alerts
+    // Spike tracking for alerts (5-minute rolling window @ 1 sample/sec)
     private var recentDBs: [Double] = []
-    private let maxRecentDBs = 30
+    private let maxRecentDBs = 300
 
     // Auto-stop timer (4 hours)
     private var autoStopTask: Task<Void, Never>?
@@ -158,8 +158,8 @@ final class LiveMeterViewModel {
             notifications.sendInstantSpikeAlert(db: db)
         }
 
-        // Cumulative TWA
-        if recentDBs.count >= 60 {
+        // Cumulative TWA — requires at least maxRecentDBs samples (5 minutes)
+        if recentDBs.count >= maxRecentDBs {
             let twa = DBCalculator.twa(dbSamples: recentDBs)
             if twa > prefs.customDangerThreshold {
                 notifications.sendCumulativeAlert(twaDB: twa)
@@ -185,7 +185,7 @@ final class LiveMeterViewModel {
             try? await Task.sleep(for: .seconds(4 * 3600))
             await MainActor.run { [weak self] in
                 self?.stopSession()
-                NotificationService.shared.sendInstantSpikeAlert(db: 0) // repurpose as session-stop notification
+                NotificationService.shared.sendAutoStopAlert()
             }
         }
     }

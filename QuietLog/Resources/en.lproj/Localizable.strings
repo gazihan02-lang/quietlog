@@ -208,6 +208,8 @@
 "alert.instant.body"                = "Your surroundings are at %d dB. Consider protecting your hearing.";
 "alert.cumulative.title"            = "Exposure Warning";
 "alert.cumulative.body"             = "Your average exposure today has reached %d dB. Take a break.";
+"alert.autostop.title"              = "Session Ended";
+"alert.autostop.body"               = "QuietLog automatically stopped after 4 hours of monitoring.";
 "alert.headphone.weekly.title"      = "Headphone Usage";
 "alert.headphone.weekly.body"       = "You've exceeded 40 hours of headphone use above 80 dB this week. This may damage your hearing.";
 

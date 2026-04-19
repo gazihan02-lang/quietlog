@@ -77,7 +77,9 @@ enum DBCalculator {
     }
 
     // MARK: - TWA (Time-Weighted Average)
-    /// OSHA-style 8-hour TWA with 3 dB exchange rate.
+    /// Energy-average (Leq) over all samples — equivalent to 8-hour TWA with 3 dB exchange rate (WHO).
+    /// Formula: Leq = 10 * log10( (1/N) * Σ 10^(dBi/10) )
+    /// Reference level: 85 dB for 8 hours. Time halves every 3 dB (3 dB exchange rate).
     /// - Parameter dbSamples: Array of dB readings (each representing 1 second)
     static func twa(dbSamples: [Double]) -> Double {
         guard !dbSamples.isEmpty else { return 0 }
